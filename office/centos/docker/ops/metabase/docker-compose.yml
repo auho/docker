@@ -1,0 +1,14 @@
+version: '3'
+services:
+  metabase:
+    build:
+      context: metabase
+    image: ops-metabase
+    restart: always
+    ports:
+      - "8082:3000"
+    networks:
+      - ops
+networks:
+  ops:
+    external: true

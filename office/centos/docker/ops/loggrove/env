@@ -1,0 +1,5 @@
+# loggrove mysql
+MYSQL_ROOT_PASSWORD=A123456a+
+MYSQL_DATABASE=loggrove
+MYSQL_USER=loggrove
+MYSQL_PASSWORD=loggrove

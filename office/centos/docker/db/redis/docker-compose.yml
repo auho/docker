@@ -1,0 +1,20 @@
+version: '3' 
+services:
+  redis:
+    build:
+      context: redis
+      args:
+        - VERSION=5.0
+    image: db-redis:5.0
+    volumes:
+      - /data/db/redis:/data
+      - /data/conf/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    restart: always
+    networks:
+      - app
+      - db
+networks:
+  app:
+    external: true
+  db:
+    external: true

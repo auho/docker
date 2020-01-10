@@ -1,0 +1,15 @@
+version: '3' 
+services:
+  go:
+    build:
+      context: go
+      args:
+        - VERSION=1.13.5
+    image: app-go:1.13.5
+    volumes:
+      - /data/www/go/:/data/www/go/
+networks:
+  app:
+    external: true
+  db:
+    external: true

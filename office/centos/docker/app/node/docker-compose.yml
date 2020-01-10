@@ -1,0 +1,13 @@
+version: '3' 
+services:
+  nginx:
+    build:
+      context: node
+      args:
+        - VERSION=10.15
+    restart: always
+    networks:
+      - app
+networks:
+  app:
+    external: true

@@ -1,0 +1,24 @@
+version: '3' 
+services:
+  jenkins:
+    build:
+      context: jenkins
+      args:
+        - DOCKER_GID=
+    image: ops-jenkins
+    environment:
+      JAVA_OPTS: "-Djava.awt.headless=true -Duser.timezone=Asia/Shanghai"
+    volumes:
+      - /data/devops/:/data/devops/
+      - /data/db/jenkins/:/var/jenkins_home/
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+      - /usr/local/bin/docker-compose:/usr/local/bin/docker-compose
+    restart: always
+    networks:
+      - app
+networks:
+  app:
+    external: true
+  db:
+    external: true

@@ -1,0 +1,17 @@
+version: '3'
+services:
+  fluentd:
+    build: fluentd
+    image: ops-fluentd
+    volumes:
+     - /data/conf/fluentd/:/fluentd/etc/
+     - /data/logs/:/data/logs/:ro
+    restart: always
+    networks:
+      - app
+      - db
+networks:
+  app:
+    external: true
+  db:
+    external: true

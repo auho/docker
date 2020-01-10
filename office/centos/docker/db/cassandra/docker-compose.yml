@@ -1,0 +1,19 @@
+version: '3' 
+services:
+  cassandra:
+    build:
+      context: cassandra
+      args:
+        - VERSION=3
+    image: db-cassandra:3
+    ports:
+      - "9042:9042"
+    volumes:
+      - /data/db/cassandra/:/var/lib/cassandra/
+      - /data/conf/cassandra/cassandra.yaml:/etc/cassandra/cassandra.yaml
+    restart: always
+    networks:
+      - db
+networks:
+  db:
+    external: true

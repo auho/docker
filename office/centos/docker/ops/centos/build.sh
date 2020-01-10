@@ -1,0 +1,1 @@
+docker build -t ops-centos:7.7 --build-arg VERSION=7.7.1908 .

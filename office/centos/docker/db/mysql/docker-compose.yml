@@ -1,0 +1,27 @@
+version: '3' 
+services:
+  mysql:
+    build:
+      context: mysql
+      args:
+        - VERSION=5.7
+    image: db-mysql:5.7
+    command: 
+      - "--slow-query-log-file=/var/lib/mysql/slow.query.log"
+      - "--slow_query_log=on"
+      - "--long_query_time=0.1"
+      - "--log-bin=/var/lib/mysql/log.bin"
+      - "--server-id=001"
+    env_file: mysql/env
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - /data/db/mysql/:/var/lib/mysql/
+    restart: always
+    networks:
+      - db
+networks:
+  app:
+    external: true
+  db:
+    external: true

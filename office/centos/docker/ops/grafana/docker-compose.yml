@@ -1,0 +1,12 @@
+version: '3'
+services:
+   grafana:
+     build:
+       context: grafana
+     image: ops-grafana
+     restart: always
+     networks:
+       - ops
+networks:
+  ops:
+    external: true

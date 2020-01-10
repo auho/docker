@@ -1,0 +1,22 @@
+version: '3' 
+services:
+  php:
+    build:
+      context: php
+      args:
+        - VERSION=7.3
+    image: app-php:7.3
+    volumes:
+      - /data/conf/php/php.ini:/usr/local/etc/php/php.ini
+      #- /data/conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - /data/www/php/:/data/www/php/
+      - /data/logs/php/:/var/log/php/
+    restart: always
+    networks:
+      - app
+      - db
+networks:
+  app:
+    external: true
+  db:
+    external: true

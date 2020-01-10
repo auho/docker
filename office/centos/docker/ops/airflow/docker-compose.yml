@@ -1,0 +1,54 @@
+version: '3' 
+services:
+  airflow-postgres:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+    volumes:
+      - /data/db/airflow/postgresql/:/var/lib/postgresql/data/
+    networks:
+      - app
+  airflow:
+    build: airflow
+    image: ops-airflow
+    restart: always
+    depends_on:
+      - airflow-postgres
+    environment:
+      - LOAD_EX=n
+      - EXECUTOR=Local
+    volumes:
+      - /data/devops/script/airflow/airflow.cfg:/usr/local/airflow/airflow.cfg
+      - /data/devops/script/airflow/dags/:/usr/local/airflow/dags/
+      - /data/logs/airflow/:/usr/local/airflow/logs/
+    command: webserver
+    networks:
+      - app
+    healthcheck:
+      test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+  airflow-scheduler:
+    build: airflow
+    image: ops-airflow-scheduler
+    restart: always
+    depends_on:
+        - airflow
+    volumes:
+      - /data/devops/script/airflow/airflow.cfg:/usr/local/airflow/airflow.cfg
+      - /data/devops/script/airflow/dags/:/usr/local/airflow/dags/
+      - /data/logs/airflow/:/usr/local/airflow/logs/
+    environment:
+        - LOAD_EX=n
+        - EXECUTOR=Local
+    command: scheduler
+    networks:
+      - app
+networks:
+  app:
+    external: true
+  db:
+    external: true

@@ -1,0 +1,15 @@
+version: '3'
+services:
+  superset:
+    build:
+      context: superset
+    image: ops-superset
+    restart: always
+    networks:
+      - app
+      - ops
+networks:
+  app:
+    external: true
+  ops:
+    external: true

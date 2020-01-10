@@ -1,0 +1,22 @@
+version: '3' 
+services:
+  mongo:
+    build:
+      context: mongo
+      args:
+        - VERSION=4.0
+    image: db-mongo:4.0
+    env_file: mongo/env
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - /data/db/mongo/db/:/data/db/
+      - /data/db/mongo/configdb/:/data/configdb/
+    restart: always
+    networks:
+      - db
+networks:
+  app:
+    external: true
+  db:
+    external: true

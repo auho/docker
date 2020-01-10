@@ -1,0 +1,11 @@
+version: '3'
+services:
+  phpstorm:
+    build:
+      context: phpstorm
+    image: phpstorm:2019.3.0
+    environment:
+      - DISPLAY=host.docker.internal:0
+    volumes:
+      - /data/db/tool/docker/phpstorm/:/root/.PhpStorm2019.1/
+      - /data/:/data/

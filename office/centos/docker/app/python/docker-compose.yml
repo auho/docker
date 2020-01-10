@@ -1,0 +1,15 @@
+version: '3' 
+services:
+  python:
+    build:
+      context: python
+      args:
+        - VERSION=3.7
+    image: app-python:3.7
+    volumes:
+      - /data/www/python/:/data/www/python/
+networks:
+  app:
+    external: true
+  db:
+    external: true

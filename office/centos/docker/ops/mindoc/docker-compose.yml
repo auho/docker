@@ -1,0 +1,26 @@
+version: '3'
+services:
+  mindoc:
+    build: mindoc
+    image: ops-mindoc
+    env_file: mindoc/env
+    depends_on:
+      - mindoc-mysql
+    restart: always
+    networks:
+      - app
+      - ops
+  mindoc-mysql:
+    image: db-mysql:5.7
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_general_ci"]
+    env_file: mindoc/env
+    volumes:
+      - /data/db/ops/mindoc-mysql/:/var/lib/mysql/
+    restart: always
+    networks:
+      - ops
+networks:
+  app:
+    external: true
+  ops:
+    external: true

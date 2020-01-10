@@ -1,0 +1,17 @@
+version: '3'
+services:
+  studio-3t:
+    image: auho/studio-3t:2019.3.0
+    environment:
+      - DISPLAY=host.docker.internal:0
+    volumes:
+      - /Users/auho/.ssh/:/opt/ssh/:ro
+      - /data/db/tool/docker/studio-3t/:/root/.3T/
+    # command: /opt/studio3t/Studio-3T
+    networks:
+      - db
+networks:
+  app:
+    external: true
+  db:
+    external: true

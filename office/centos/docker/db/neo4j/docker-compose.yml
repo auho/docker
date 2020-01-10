@@ -1,0 +1,19 @@
+version: '3' 
+services:
+  neo4j:
+    build:
+      context: neo4j
+      args:
+        - VERSION=3.5.6
+    image: db-neo4j:3.5.6
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - /data/db/neo4j/:/data
+    restart: always
+    networks:
+      - db
+networks:
+  db:
+    external: true

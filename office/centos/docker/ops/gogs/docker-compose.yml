@@ -1,0 +1,36 @@
+version: '3' 
+services:
+  gogs:
+    build: gogs
+    image: ops-gogs
+    environment:
+      - PUID=1002
+      - PGID=1002
+    ports:
+      - "127.0.0.1:10022:22"
+    depends_on:
+      - gogs-mysql
+    volumes:
+      - /data/db/gogs/:/data/
+      - /data/www/:/data/www/
+    restart: always
+    networks:
+      - app
+  gogs-mysql:
+    build:
+      context: mysql
+      args:
+        - VERSION=5.7
+    image: ops-gogs-mysql
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_general_ci"]
+    env_file: gogs/env
+    volumes:
+      - /data/db/gogs/mysql/:/var/lib/mysql/
+    restart: always
+    networks:
+      - app
+networks:
+  app:
+    external: true
+  db:
+    external: true
